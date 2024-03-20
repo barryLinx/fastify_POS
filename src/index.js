@@ -53,6 +53,13 @@ fastify.register(salesDataRoute);
 
 
 module.exports = async (req, res) => {
-  await fastify.ready();
-  fastify.server.emit('request', req, res);
+  try {
+    // 等待 Fastify 准备好
+    await fastify.ready();
+    // 调用 Fastify 处理请求
+    fastify.server.emit('request', req, res);
+  } catch (error) {
+    // 如果出现错误，返回错误信息
+    res.status(500).send('Internal Server Error');
+  }
 };
