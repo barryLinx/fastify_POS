@@ -1,0 +1,4 @@
+node_modules
+localhost.crt
+localhost.key
+.env
