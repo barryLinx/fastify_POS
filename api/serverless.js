@@ -16,8 +16,6 @@ const authRoutes = require("../src/routes/authRoute");
 const menuDataRoute = require("../src/routes/menuDataRoute");
 const salesDataRoute = require("../src/routes/salesRoute");
 
-
-
 // 註冊插件 fastify-jwt , 解析 accessToken
 fastify.register(require("@fastify/jwt"), {
   secret: process.env.ACCESS_TOKEN_SECRET,
