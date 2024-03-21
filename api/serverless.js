@@ -12,7 +12,7 @@ const app = Fastify({
 });
 
 // Register your application as a normal plugin.
-app.register(import("../src"));
+app.register(import("../src/index"));
 
 module.exports = async (req, res) => {
   try {
