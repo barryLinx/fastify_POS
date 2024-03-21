@@ -36,7 +36,7 @@ fastify.register(authRoutes);
 fastify.register(menuDataRoute);
 fastify.register(salesDataRoute);
 
-fastify.get('/test',async (request, reply) => {
+fastify.get('/',async (request, reply) => {
   reply.send({ hello: 'world',message:"deploy success" });
 });
 
