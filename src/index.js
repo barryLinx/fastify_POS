@@ -15,6 +15,7 @@ const menuDataRoute = require("./routes/menuDataRoute");
 const salesDataRoute = require("./routes/salesRoute");
 
 
+
 // 註冊插件 fastify-jwt , 解析 accessToken
 fastify.register(require("@fastify/jwt"), {
   secret: process.env.ACCESS_TOKEN_SECRET,
@@ -35,31 +36,23 @@ fastify.register(authRoutes);
 fastify.register(menuDataRoute);
 fastify.register(salesDataRoute);
 
+fastify.get('/test',async (request, reply) => {
+  reply.send({ hello: 'world',message:"deploy success" });
+});
 
-// 啟動 Fastify 伺服器
-// const start = async () => {
-//   try {
-//     await fastify.listen({ port: 3000 });
-
-//     const address = fastify.server.address();
-//     const port = typeof address === "string" ? address : address?.port;
-//   } catch (err) {
-//     fastify.log.error(err);
-//     process.exit(1);
-//   }
-// };
-
-// start();
-
-
-module.exports = async (req, res) => {
+////啟動 Fastify 伺服器
+const start = async () => {
   try {
-    // 等待 Fastify 准备好
-    await fastify.ready();
-    // 调用 Fastify 处理请求
-    fastify.server.emit('request', req, res);
-  } catch (error) {
-    // 如果出现错误，返回错误信息
-    res.status(500).send('Internal Server Error');
+    await fastify.listen({ port: 3000 });
+
+    const address = fastify.server.address();
+    const port = typeof address === "string" ? address : address?.port;
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
   }
 };
+
+start();
+
+
