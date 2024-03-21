@@ -24,7 +24,7 @@ fastify.register(require("@fastify/jwt"), {
 });
 
  fastify.register(require('@fastify/cors'), {
-  origin:"http://localhost:8081",
+  origin:"*",
   credentials:true,
   
 })
