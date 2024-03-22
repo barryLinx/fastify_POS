@@ -1,5 +1,13 @@
 async function menu(request, reply) {
- 
+  const currentUserRole = request.user;
+
+  console.log("currentUserRole:", currentUserRole);
+
+  if ( currentUserRole.role !== "admin") {
+    reply.code(403).send({ error: "Forbidden" });
+    return;
+  }
+
   let dailySalesData = [];
   const randomName = [
     "義式咖啡拿鐵",
@@ -27,17 +35,17 @@ async function menu(request, reply) {
 
   for (var i = 0; i < 73; i++) {
     dailySalesData.push({
-      id:i+1,
-      name:randomName[getRndInteger(0, randomName.length - 1)],
+      id: i + 1,
+      name: randomName[getRndInteger(0, randomName.length - 1)],
       price: getRndInteger(35, 200),
       categroy: getRndInteger(1, 6),
       imgUrl: "https://placehold.co/600x400",
-      describe: "Lorem ipsum dolor sit amet consectetur adipisicing elit,Lorem ipsum dolor sit amet consectetur adipisicing elit,Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      describe:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit,Lorem ipsum dolor sit amet consectetur adipisicing elit,Lorem ipsum dolor sit amet consectetur adipisicing elit",
     });
   }
-  reply.header('Cache-Control', 'public,must-revalidate, max-age=3600');
+  reply.header("Cache-Control", "public,must-revalidate, max-age=3600");
   reply.code(200).send(dailySalesData);
 }
-
 
 module.exports = menu;

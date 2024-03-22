@@ -22,8 +22,8 @@ fastify.register(require("@fastify/jwt"), {
 });
 
  fastify.register(require('@fastify/cors'), {
-  origin:"http://localhost:8081",
-  credentials:true,
+  origin:'*',
+  //credentials:true, //Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
   
 })
 

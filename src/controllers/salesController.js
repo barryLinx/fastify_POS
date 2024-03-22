@@ -1,5 +1,13 @@
 async function salesData(request, reply) {
- 
+  const currentUserRole = request.user;
+
+  console.log("currentUserRole:", currentUserRole);
+
+  if ( currentUserRole.role !== "admin") {
+    reply.code(403).send({ error: "Forbidden" });
+    return;
+  }
+
   let dailySalesData = [];
   const randomName = [
     "義式咖啡拿鐵",
