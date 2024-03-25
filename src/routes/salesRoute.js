@@ -4,7 +4,7 @@ const salesData = require("../controllers/salesController");
 async function routes(fastify, options) {
     
   fastify.get(
-    "/api/salesData",
+    "/api/getSalesData",
     {
       onRequest: [fastify.authenticate],
     },

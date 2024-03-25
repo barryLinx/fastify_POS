@@ -1,0 +1,46 @@
+{
+  "userRole": [
+    {
+      "username": "100",
+      "email": "bb@yahoo.com",
+      "role": "admin",
+      "password": "123456"
+    },
+    {
+      "username": "300",
+      "email": "ss@gmail.com",
+      "role": "employee",
+      "password": "123456"
+    },
+    {
+      "username": "301",
+      "role": "employee",
+      "email": "ff@yahoo.com",
+      "password": "123456"
+    },
+    {
+      "username": "302",
+      "role": "employee",
+      "email": "ff@gmail.com",
+      "password": "123456"
+    },
+    {
+      "username": "400",
+      "role": "engineer",
+      "email": "ww@gmail.com",
+      "password": "123456"
+    },
+    {
+      "username": "402",
+      "role": "engineer",
+      "email": "qqaz@gmail.com",
+      "password": "123456"
+    },
+    {
+      "username": "401",
+      "role": "engineer",
+      "email": "rty@gmail.com",
+      "password": "123456"
+    }
+  ]
+}

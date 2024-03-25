@@ -1,6 +1,6 @@
 //const bcrypt = require("bcrypt");
 //const jwt = require('jsonwebtoken');
-
+const { readDb,writeDb } =require("../config/dbAccess");
 // 定義ACCESS_TOKEN_SECRET和REFRESH_TOKEN_SECRET
 const { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } = process.env;
 
@@ -24,22 +24,19 @@ let refreshTokens = [];
 //   });
 // };
 
-//fake userRole Data
-const userRole = [
-  { username: "hello", role: "admin", password: "123456" },
-  { username: "you", role: "employee", password: "123456" },
-  { username: "qq", role: "employee", password: "123456" },
-];
 
 // 路由: 登入並生成Access Token和Refresh Token
 async function login(request, reply) {
   // 假設這裡有一個驗證使用者的過程
   const { username, password } = request.body;
 
+  const db = await readDb();
+  const userRole = db.userRole;
+  //console.log("userRole: ", userRole);
   let user = userRole.find(
     (user) => user.username === username && user.password === password
   );
-  console.log("user: ", user);
+  //console.log("user: ", user);
   if (!user) {
     reply.code(401).send({ message: "帳號或密碼錯誤" });
     return;

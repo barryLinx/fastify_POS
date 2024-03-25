@@ -13,8 +13,7 @@ const authentication=require('./plugins/authentication');
 const authRoutes = require("./routes/authRoute");
 const menuDataRoute = require("./routes/menuDataRoute");
 const salesDataRoute = require("./routes/salesRoute");
-
-
+const setUserRoute = require("./routes/setUserRoute");
 
 // 註冊插件 fastify-jwt , 解析 accessToken
 fastify.register(require("@fastify/jwt"), {
@@ -35,6 +34,7 @@ fastify.register(authentication);
 fastify.register(authRoutes);
 fastify.register(menuDataRoute);
 fastify.register(salesDataRoute);
+fastify.register(setUserRoute);
 
 fastify.get('/',async (request, reply) => {
   reply.send({ hello: 'world',message:"deploy success" });

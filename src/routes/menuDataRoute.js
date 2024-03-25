@@ -4,7 +4,7 @@ async function routes(fastify, options) {
   //fastify.get("/MenuData", menu);
   
   fastify.get(
-    "/api/MenuData",
+    "/api/getMenuData",
     {
       onRequest: [fastify.authenticate],
     },

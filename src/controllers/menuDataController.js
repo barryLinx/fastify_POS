@@ -3,7 +3,7 @@ async function menu(request, reply) {
 
   console.log("currentUserRole:", currentUserRole);
 
-  if ( currentUserRole.role !== "admin") {
+  if ( currentUserRole.role !== "admin" && currentUserRole.role !== "employee") {
     reply.code(403).send({ error: "Forbidden" });
     return;
   }
