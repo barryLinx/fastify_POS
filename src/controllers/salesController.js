@@ -29,7 +29,7 @@ async function salesData(request, reply) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  for (var i = 0; i < 25; i++) {
+  for (var i = 0; i < 1000; i++) {
     dailySalesData.push({
       name:randomName[getRndInteger(0, randomName.length - 1)],
       price: getRndInteger(35, 100),
@@ -48,7 +48,7 @@ async function salesData(request, reply) {
       dailySales: dailySalesData,
     }
   ;
-  reply.header('Cache-Control', 'public, must-revalidate,max-age=3600');
+  // reply.header('Cache-Control', 'public, must-revalidate,max-age=3600');
   reply.code(200).send(data);
 }
 
