@@ -21,7 +21,7 @@ fastify.register(require("@fastify/jwt"), {
 });
 
  fastify.register(require('@fastify/cors'), {
-  origin:['https://barrylinx.github.io','https://solidjs-pos-system.vercel.app',"https://solidjs-test-beta.vercel.app/"],
+  origin:['https://barrylinx.github.io','https://solidjs-pos-system.vercel.app',"https://solidjs-test-beta.vercel.app"],
   //credentials:true, //Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
   
 })
