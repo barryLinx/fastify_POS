@@ -1,12 +1,12 @@
 async function salesData(request, reply) {
-  const currentUserRole = request.user;
+  // const currentUserRole = request.user;
 
-  console.log("currentUserRole:", currentUserRole);
+  // console.log("currentUserRole:", currentUserRole);
 
-  if ( currentUserRole.role !== "admin" && currentUserRole.role !== "employee") {
-    reply.code(403).send({ error: "Forbidden" });
-    return;
-  }
+  // if ( currentUserRole.role !== "admin" && currentUserRole.role !== "employee") {
+  //   reply.code(403).send({ error: "Forbidden" });
+  //   return;
+  // }
 
   let dailySalesData = [];
   const randomName = [
