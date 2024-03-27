@@ -5,9 +5,9 @@ async function routes(fastify, options) {
     
   fastify.get(
     "/api/getSalesData",
-    {
-      onRequest: [fastify.authenticate],
-    },
+    // {
+    //   onRequest: [fastify.authenticate],
+    // },
     salesData
   );
 
