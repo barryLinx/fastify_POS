@@ -27,7 +27,7 @@ fastify.register(require("@fastify/cors"), {
     "https://solidjs-test-beta.vercel.app",
     "https://pos.zeabur.app",
   ],
-  //credentials:true, //Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
+  credentials:true, //Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
 });
 
 fastify.register(require("@fastify/cookie"));

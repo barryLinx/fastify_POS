@@ -48,7 +48,7 @@ async function salesData(request, reply) {
       dailySales: dailySalesData,
     }
   ;
-  // reply.header('Cache-Control', 'public, must-revalidate,max-age=3600');
+  reply.header('Cache-Control', 'public, must-revalidate,max-age=3600');
   reply.code(200).send(data);
 }
 
