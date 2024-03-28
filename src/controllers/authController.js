@@ -38,7 +38,7 @@ async function login(request, reply) {
   );
   //console.log("user: ", user);
   if (!user) {
-    reply.code(401).send({ message: "帳號或密碼錯誤" });
+    reply.code(401).send({ statusCustom:4001,message: "帳號或密碼錯誤" });
     return;
   }
   // 一旦驗證成功，生成Access Token和Refresh Token
@@ -81,7 +81,7 @@ async function refreshToken(request, reply) {
   if (!refreshToken) {
     return reply
       .code(401)
-      .send({ statusCode: 401, message: "未提供Refresh Token" });
+      .send({ statusCustom:4002, message: "未提供Refresh Token" });
   }
 
   try {
