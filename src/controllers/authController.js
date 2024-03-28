@@ -5,7 +5,7 @@ const { readDb,writeDb } =require("../config/dbAccess");
 const { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } = process.env;
 
 // 設定JWT有效期限
-const JWT_EXPIRATION_ACCESS = "10m"; // Access Token過期時間
+const JWT_EXPIRATION_ACCESS = "30s"; // Access Token過期時間
 const JWT_EXPIRATION_REFRESH = "1h"; // Refresh Token過期時間
 
 let refreshTokens = [];
