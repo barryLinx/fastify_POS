@@ -1,6 +1,6 @@
-const fs = require('fs');
-const fastify = require("fastify")({ 
-  logger: true ,
+const fs = require("fs");
+const fastify = require("fastify")({
+  logger: true,
   // https: {
   //   key: fs.readFileSync('E:/fastify-pos/localhost.key'),
   //   cert: fs.readFileSync('E:/fastify-pos/localhost.crt')
@@ -9,7 +9,7 @@ const fastify = require("fastify")({
 require("dotenv").config();
 //const verifyJWT = require('./middleware/verifyJWT');
 
-const authentication=require('./plugins/authentication');
+const authentication = require("./plugins/authentication");
 const authRoutes = require("./routes/authRoute");
 const menuDataRoute = require("./routes/menuDataRoute");
 const salesDataRoute = require("./routes/salesRoute");
@@ -20,11 +20,15 @@ fastify.register(require("@fastify/jwt"), {
   secret: process.env.ACCESS_TOKEN_SECRET,
 });
 
- fastify.register(require('@fastify/cors'), {
-  origin:['https://barrylinx.github.io','https://solidjs-pos-system.vercel.app',"https://solidjs-test-beta.vercel.app"],
+fastify.register(require("@fastify/cors"), {
+  origin: [
+    "https://barrylinx.github.io",
+    "https://solidjs-pos-system.vercel.app",
+    "https://solidjs-test-beta.vercel.app",
+    "https://pos.zeabur.app",
+  ],
   //credentials:true, //Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
-  
-})
+});
 
 fastify.register(require("@fastify/cookie"));
 //註冊 authentication 插件，例如fastify-jwt
@@ -36,8 +40,8 @@ fastify.register(menuDataRoute);
 fastify.register(salesDataRoute);
 fastify.register(setUserRoute);
 
-fastify.get('/',async (request, reply) => {
-  reply.send({ hello: 'world',message:"deploy success" });
+fastify.get("/", async (request, reply) => {
+  reply.send({ hello: "world", message: "deploy success" });
 });
 
 ////啟動 Fastify 伺服器
@@ -54,6 +58,5 @@ const start = async () => {
 };
 
 start();
-
 
 module.exports = fastify;
