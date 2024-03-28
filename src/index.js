@@ -26,6 +26,7 @@ fastify.register(require("@fastify/cors"), {
     "https://solidjs-pos-system.vercel.app",
     "https://solidjs-test-beta.vercel.app",
     "https://pos.zeabur.app",
+    "http://localhost:8081"
   ],
   credentials:true, //Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
 });
