@@ -30,7 +30,7 @@ module.exports = fp(async function (fastify, opts) {
       // console.log("code",err.code);
       // console.log("statusCode",err.statusCode)
       reply
-        .code(401)
+        .code(441)
         .send({ statusCode: err.statusCode, errMessage:"AUTHORIZATION_TOKEN_EXPIRED" });
     }
   });
