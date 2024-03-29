@@ -44,7 +44,7 @@ async function menu(request, reply) {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit,Lorem ipsum dolor sit amet consectetur adipisicing elit,Lorem ipsum dolor sit amet consectetur adipisicing elit",
     });
   }
-  reply.header("Cache-Control", "public,must-revalidate, max-age=3600");
+ // reply.header("Cache-Control", "public,must-revalidate, max-age=3600");
   reply.code(200).send(dailySalesData);
 }
 
