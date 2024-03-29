@@ -10,20 +10,6 @@ const JWT_EXPIRATION_REFRESH = "1h"; // Refresh Token過期時間
 
 let refreshTokens = [];
 
-// async function generateAccessToken(user)  {
-//   return await fastifyJwt.jwt.sign({user}, {
-//     secret: ACCESS_TOKEN_SECRET,
-//     expiresIn: accessTokenExpiry,
-//   });
-// };
-
-// async function generateRefreshToken(user) {
-//   return await fastifyJwt.jwt.sign({user}, {
-//     secret: REFRESH_TOKEN_SECRET,
-//     expiresIn: refreshTokenExpiry,
-//   });
-// };
-
 
 // 路由: 登入並生成Access Token和Refresh Token
 async function login(request, reply) {

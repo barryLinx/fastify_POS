@@ -31,7 +31,7 @@ module.exports = fp(async function (fastify, opts) {
       // console.log("statusCode",err.statusCode)
       reply
         .code(441)
-        .send({ statusCode: err.statusCode, errMessage:"AUTHORIZATION_TOKEN_EXPIRED" });
+        .send({ statusCode: 441, errMessage:"AUTHORIZATION_TOKEN_EXPIRED" });
     }
   });
 });
