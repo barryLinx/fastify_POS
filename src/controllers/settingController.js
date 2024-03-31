@@ -1,5 +1,7 @@
 // src/routes/userRoute.js
-const { readDb,writeDb } =require("../config/dbAccess");
+//const { readDb,writeDb } =require("../config/dbAccess");
+const axios = require("axios");
+const { VERCEL_JSON_DB } = process.env;
 
 async function postAddUser(request, reply) {
   const currentUserRole = request.user;
@@ -11,27 +13,34 @@ async function postAddUser(request, reply) {
     return;
   }
 
-  const { username, role } = request.body;
-  const db = await readDb();
-  // 找到要修改的對象
-  const userToUpdate = db.userRole.find(user => user.username === username);
+  const user = request.body;
+  console.log("user:", user);
 
-  if (!userToUpdate) {
-    reply.code(404).send({ error: "User not found" });
-    return;
+  try {
+    // patch 指修改 role
+    await axios.patch(`${VERCEL_JSON_DB}/${user.id}`, {
+      role: user.role,
+    });
+    //console.log("response status:", response.status);
+    //console.log("data:", data);
+    reply.code(201).send({ message: "userRole Change" });
+  } catch (err) {
+    //console.log("err:", err.response.status);
+    if (err.response.status == 404) {
+      reply
+        .code(err.response.status)
+        .send({ statusCode: 441, error: err.response.data });
+      return;
+    }
+    reply.code(500).send({ error: "Internal Server Error" });
+    return; // 中斷程式執行，不會執行reply.code(201).send({ message: "userRole Change" }); 這一行。
+    // 中斷程式執行，不會執行reply.code(201).send({ message: "userRole Change" }); 這一行。
+    // 因為reply.code(500).send({ error: "Internal Server Error" }); 這一行，會中斷程式執行。
+    // 因為reply.code(500).send({ error: "Internal Server Error" }); 這一行，會中斷程式執行。
   }
-
-  // 更新用户的角色
-  userToUpdate.role = role;
- 
-
-  //db.userRole.push({ username, role });
-  await writeDb(db);
-  reply.code(201).send({ message: "userRole Change" });
- 
 }
 
-async function getUsersAll(request, reply){
+async function getUsersAll(request, reply) {
   const currentUserRole = request.user;
 
   console.log("currentUserRole:", currentUserRole);
@@ -40,9 +49,16 @@ async function getUsersAll(request, reply){
     reply.code(403).send({ error: "Forbidden" });
     return;
   }
-  const db = await readDb();
-  const usersWithNoPassword = db.userRole.map(({ password, ...rest }) => rest);
+
+  const response = await axios.get(`${VERCEL_JSON_DB}`);
+  //console.log("response:", response.data);
+  const data = response.data;
+
+  const usersWithNoPassword = data.map(({ password, ...rest }) => rest);
+
+  console.log("usersWithNoPassword:", usersWithNoPassword);
+
   reply.send(usersWithNoPassword);
 }
 
-module.exports = {getUsersAll,postAddUser};
+module.exports = { getUsersAll, postAddUser };
