@@ -1,57 +1,70 @@
 //const bcrypt = require("bcrypt");
 //const jwt = require('jsonwebtoken');
-const { readDb,writeDb } =require("../config/dbAccess");
-// 定義ACCESS_TOKEN_SECRET和REFRESH_TOKEN_SECRET
+
+const axios = require("axios");
+const { VERCEL_JSON_DB } = process.env;
 const { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } = process.env;
 
 // 設定JWT有效期限
-const JWT_EXPIRATION_ACCESS = "30s"; // Access Token過期時間
+const JWT_EXPIRATION_ACCESS = "15s"; // Access Token過期時間
 const JWT_EXPIRATION_REFRESH = "1h"; // Refresh Token過期時間
 
 let refreshTokens = [];
 
-
 // 路由: 登入並生成Access Token和Refresh Token
 async function login(request, reply) {
   // 假設這裡有一個驗證使用者的過程
-  const { username, password } = request.body;
+  try {
+    const { id, password } = request.body;
+    //console.log("request_body: ", request.body);
 
-  const db = await readDb();
-  const userRole = db.userRole;
-  //console.log("userRole: ", userRole);
-  let user = userRole.find(
-    (user) => user.username === username && user.password === password
-  );
-  //console.log("user: ", user);
-  if (!user) {
-    reply.code(401).send({ message: "帳號或密碼錯誤" });
-    return;
+    const response = await axios.get(`${VERCEL_JSON_DB}/${id}`);
+    
+    // console.log("response: ", response);
+     console.log("data: ", response.data);  
+
+
+    if (response.data?.password !== password) {
+      reply.code(404).send({ message: "帳號或密碼錯誤" });
+      return;
+    }
+   
+   
+    // 一旦驗證成功，生成Access Token和Refresh Token
+    const accessToken = this.jwt.sign(
+      { username: response.data.id, role: response.data.role },
+      { secret: ACCESS_TOKEN_SECRET, expiresIn: JWT_EXPIRATION_ACCESS }
+    );
+    const refreshToken = this.jwt.sign(
+      { username: response.data.id, role: response.data.role },
+      { secret: REFRESH_TOKEN_SECRET, expiresIn: JWT_EXPIRATION_REFRESH }
+    );
+
+    // 將Refresh Token加入refreshTokens陣列中
+    refreshTokens.push(refreshToken);
+
+    // 在HTTP Only的cookie中設定Refresh Token , 登入成功後回傳200狀態碼
+    reply
+      .setCookie("refreshToken", refreshToken, {
+        //domain:"", // 當下網域
+        path: "/api/auth/refresh", // refresh token路徑
+        httpOnly: true,
+        maxAge: 60 * 60, // 一小時
+        //secure: false, // 僅在 HTTPS 中傳輸 cookie (send cookie over HTTPS only)
+        sameSite: "None", // 防止CSRF攻擊 // Consider using 'Lax' for localhost development
+      })
+      .code(201)
+      .send({ message: "登入成功", accessToken });
+  } catch (err) {
+    console.log("error: ", err);
+    
+    if (err.response.status == 404) {
+      reply.code(441).send({ statusCode: 441, error: "Not Found user" });
+      return;
+    }
+    reply.code(500).send({ status:500,error: "Internal Server Error" });
+    return; // 中斷程式執行，不會執行reply.code(201).send({ message: "userRole Change" }); 這一行。
   }
-  // 一旦驗證成功，生成Access Token和Refresh Token
-  const accessToken = this.jwt.sign(
-    { username:user.username, role:user.role },
-    { secret: ACCESS_TOKEN_SECRET, expiresIn: JWT_EXPIRATION_ACCESS }
-  );
-  const refreshToken = this.jwt.sign(
-    { username:user.username, role:user.role },
-    { secret: REFRESH_TOKEN_SECRET, expiresIn: JWT_EXPIRATION_REFRESH }
-  );
-
-  // 將Refresh Token加入refreshTokens陣列中
-  refreshTokens.push(refreshToken);
-
-  // 在HTTP Only的cookie中設定Refresh Token , 登入成功後回傳200狀態碼
-  reply
-    .setCookie("refreshToken", refreshToken, {
-      //domain:"", // 當下網域
-      path: "/api/auth/refresh", // refresh token路徑
-      httpOnly: true,
-      maxAge: 60 * 60, // 一小時
-      //secure: false, // 僅在 HTTPS 中傳輸 cookie (send cookie over HTTPS only)
-      sameSite: "None", // 防止CSRF攻擊 // Consider using 'Lax' for localhost development
-    })
-    .code(201)
-    .send({ message: "登入成功", accessToken });
 
   //return { accessToken };
 }
@@ -65,7 +78,7 @@ async function refreshToken(request, reply) {
   console.log("refreshToken: ", refreshToken);
   // 若Refresh Token無效則會回傳401狀態碼，
   if (!refreshToken) {
-    return reply.code(402).send({message: "未提供Refresh Token" });
+    return reply.code(402).send({ message: "未提供Refresh Token" });
   }
 
   try {
