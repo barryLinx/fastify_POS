@@ -23,7 +23,7 @@ module.exports = fp(async function (fastify, opts) {
       const decodedToken = await request.jwtVerify();
        // 將client 資料附加到request
       request.user = decodedToken;       
-      console.log("decodedToken",decodedToken);
+      //console.log("decodedToken",decodedToken);
     } catch (err) {
       // console.log("err",err);
       // //console.log("",err);

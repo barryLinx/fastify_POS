@@ -13,13 +13,13 @@ async function postAddUser(request, reply) {
     return;
   }
 
-  const user = request.body;
-  console.log("user:", user);
+  const {id,role} = request.body;
+  console.log("user:", request.body);
 
   try {
     // patch 指修改 role
-    await axios.patch(`${VERCEL_JSON_DB}/${user.id}`, {
-      role: user.role,
+    await axios.patch(`${VERCEL_JSON_DB}/${id}`, {
+      role: role,
     });
     //console.log("response status:", response.status);
     //console.log("data:", data);

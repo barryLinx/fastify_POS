@@ -6,7 +6,7 @@ const { VERCEL_JSON_DB } = process.env;
 const { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } = process.env;
 
 // 設定JWT有效期限
-const JWT_EXPIRATION_ACCESS = "15s"; // Access Token過期時間
+const JWT_EXPIRATION_ACCESS = "30s"; // Access Token過期時間
 const JWT_EXPIRATION_REFRESH = "1h"; // Refresh Token過期時間
 
 let refreshTokens = [];
