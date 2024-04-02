@@ -16,9 +16,11 @@ const salesDataRoute = require("./routes/salesRoute");
 const setUserRoute = require("./routes/setUserRoute");
 
 // 註冊插件 fastify-jwt , 解析 accessToken
-fastify.register(require("@fastify/jwt"), {
+fastify.register(require("@fastify/jwt"), 
+{
   secret: process.env.ACCESS_TOKEN_SECRET,
-});
+}
+);
 
 fastify.register(require("@fastify/cors"), {
   origin: [

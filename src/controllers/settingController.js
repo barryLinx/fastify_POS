@@ -28,7 +28,7 @@ async function postAddUser(request, reply) {
     //console.log("err:", err.response.status);
     if (err.response.status == 404) {
       reply
-        .code(err.response.status)
+        .code(441)
         .send({ statusCode: 441, error: err.response.data });
       return;
     }

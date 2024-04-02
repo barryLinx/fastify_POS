@@ -25,7 +25,7 @@ async function login(request, reply) {
 
 
     if (response.data?.password !== password) {
-      reply.code(404).send({ message: "帳號或密碼錯誤" });
+      reply.code(441).send({ message: "帳號或密碼錯誤" });
       return;
     }
    
