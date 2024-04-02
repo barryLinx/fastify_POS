@@ -32,11 +32,11 @@ async function login(request, reply) {
    
     // 一旦驗證成功，生成Access Token和Refresh Token
     const accessToken = this.jwt.sign(
-      { username: response.data.id, role: response.data.role },
+      { userId: response.data.id, role: response.data.role },
       { secret: ACCESS_TOKEN_SECRET, expiresIn: JWT_EXPIRATION_ACCESS }
     );
     const refreshToken = this.jwt.sign(
-      { username: response.data.id, role: response.data.role },
+      { userId: response.data.id, role: response.data.role },
       { secret: REFRESH_TOKEN_SECRET, expiresIn: JWT_EXPIRATION_REFRESH }
     );
 
@@ -54,7 +54,7 @@ async function login(request, reply) {
         sameSite: "None", // 防止CSRF攻擊 // Consider using 'Lax' for localhost development
       })
       .code(201)
-      .send({ message: "登入成功", accessToken });
+      .send({ userName:response.data.username,message: "登入成功", accessToken });
   } catch (err) {
     console.log("error: ", err);
     
