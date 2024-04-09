@@ -55,10 +55,13 @@ async function getUsersAll(request, reply) {
   const data = response.data;
 
   const usersWithNoPassword = data.map(({ password, ...rest }) => rest);
+  const users = usersWithNoPassword.filter((u)=>{
+    return u.id !== "100";
+  })
 
-  console.log("usersWithNoPassword:", usersWithNoPassword);
+  console.log("users:", users);
 
-  reply.send(usersWithNoPassword);
+  reply.send(users);
 }
 
 module.exports = { getUsersAll, postAddUser };
